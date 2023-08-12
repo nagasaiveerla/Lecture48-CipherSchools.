@@ -1,0 +1,134 @@
+package trees;
+
+class Node{
+    int data;
+    Node left;
+    Node right;
+    Node(int data)
+    {
+        this.data = data;
+        this.left = null;
+        this.right = null;
+
+    }
+}
+public class BinaryTree{
+    Node root;//root for the binary tree
+    BinaryTree(int data)
+    {
+        this.root = new Node(data);
+
+    }
+    int TreeSum(Node root)
+    {
+        if(root == null) return 0;
+        return root.data + TreeSum(root.left) + TreeSum(root.right);
+    }
+    int CountNodes(Node root)
+    {
+        if(root == null) return 0;
+        return 1+ TreeSum(root.left) + TreeSum(root.right);
+    }
+    int leafNodes(Node root)
+    {
+        if(root == null) return 0;
+        if(root.left == null&& root.right == null)return 1;
+        return  TreeSum(root.left) + TreeSum(root.right);
+    }
+    int height(Node root)
+    {
+        if(root == null) return -1;
+        return 1 + Math.max(height(root.left) , height(root.right));
+    }
+    void printAtLevel(Node root ,int level)
+    {
+        if(root == null) return ;
+        if(level==0)
+        {
+            System.out.println(root.data+" ");
+            return;
+        }
+        printAtLevel(root.left,level -1);
+        printAtLevel(root.right,level -1);
+        System.out.println();//leaving a line only when done with processing
+
+    }
+    void printAtLevelHelper(root,level) {
+        //at this point all processing has been done
+        System.out.println();
+    }
+
+    void preOrder(Node root)
+    {
+        if(root == null) return ;
+        System.out.println(root.data+" " );//value
+        preOrder(root.left);
+        preOrder(root.right);
+    }
+    void inOrder(Node root)
+    {
+        if(root == null) return;
+        inOrder(root.left);//left
+        System.out.println(root.data+" ");//value
+        inOrder(root.right);//right
+    }
+   void PostOrder(Node root)
+   {
+       if(root == null) return;
+       PostOrder(root.left);//left
+       PostOrder(root.right);//right
+       System.out.println(root.data+" ");//value
+   }
+
+   boolean isIndentical(Node  root1 ,Node root2)
+   {
+       if(root1 == null && root2 == null) return true;
+       if(root1 == null || root2 == null) return true;
+       if(root1.data != root2.data) return false;
+       return isIndentical(root1.left,root2.left) && isIndentical(root1.right, root2.right);
+
+   }
+    public static void main(String args[]){
+        BinaryTree bt = new BinaryTree((2));//create a bt with 2 as the root
+        bt.root.left = new Node(3);
+       bt. root.right = new Node(5);
+       bt. root.right = new Node(9);
+       bt. root.right = new Node(7);
+        //simple tree is created
+
+        BinaryTree bt2 = new BinaryTree(2);//create a indentical tree
+        bt2.root.left= new Node(3);
+        bt2.root.left= new Node(5);
+        bt2.root.left= new Node(9);
+        bt2.root.left= new Node(7);
+
+        BinaryTree bt3 = new BinaryTree(2)//create bt with 2 as the root
+        bt3 .root.left = new Node(3);
+        bt3 .root.left = new Node(5);
+        bt3.root.left.right = new Node(9);
+        bt3.root.left.left= new Node(8);
+        bt3 .root.left = new Node(7);
+        bt3 .root.left = new Node(9);
+
+
+
+        System.out.println(bt.TreeSum(bt.root));
+        System.out.println(bt.CountNodes(bt.root));
+        System.out.println(bt.leafNodes(bt.root));
+        System.out.println(bt.height(bt.root));
+        bt.printAtLevel(bt.root,0);
+        System.out.println();
+        bt.printAtLevel(bt.root,1);
+        System.out.println();
+        bt.printAtLevel(bt.root,2);
+        System.out.println();
+        bt.preOrder(bt.root);
+        System.out.println();
+        bt.inOrder(bt.root);
+        System.out.println();
+        bt.PostOrder(bt.root);
+        System.out.println();
+
+
+        System.out.println(bt.isIndentical(root,bt2 .root));
+        System.out.println(bt.isIndentical(root,bt3 .root));
